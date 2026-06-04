@@ -1,5 +1,28 @@
 <?php
+    include 'config.php';
 
+    $mensaje = "";
+    $clase_mensaje = "";
+    var_dump($_POST);
+    if($_SERVER["REQUEST_METHOD"] == 'POST'){
+        $set_num = $_POST["set_num"];
+        $name = $_POST["name"];
+        $year = $_POST["year"];
+        $num_parts = $_POST["num_parts"];
+        $theme_id = $_POST["theme_id"];
+
+        $sql = "INSERT INTO sets (set_num, name, year, theme_id, num_parts)
+            VALUES ('$set_num', '$name', $year, $theme_id, $num_parts)";
+        $query = mysqli_query($conexion, $sql);
+        if($query){
+            $mensaje = "FUE UN EXITO";
+            $clase_mensaje = "mensaje-exito";
+        }
+        else{
+            $mensaje = "OCURRIO UN ERROR";
+            $clase_mensaje = "mensaje-error";
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -22,10 +45,10 @@
     </div>
 
     <!-- PHP --> 
-    <div class="mensaje <?php  ?>">
+    <div class="mensaje <?php echo $clase_mensaje ?>">
         <h3>Resultado de la inserción:</h3>
         <!-- PHP --> 
-        <p><?php  ?></p>
+        <p><?php echo $mensaje ?></p>
         <br>
         <a href="crear.php" style="color: #000; font-weight:bold;">Añadir otro set</a> | 
         <a href="index.html" style="color: #000; font-weight:bold;">Ir al buscador</a>
